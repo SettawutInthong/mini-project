@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { useState } from 'react';
 import { Form , Row, Col ,Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 var md5 = require("md5");
 
@@ -129,6 +129,7 @@ export default function Login() {
                 <Row>
                     <Col md={3}>
                         <Button type="submit">Login</Button>
+                        <Link to={"/user/add"} className="btn btn-outline-primary me-3">Register</Link>
                     </Col>
                 </Row>
             </Form>
