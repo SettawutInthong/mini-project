@@ -5,6 +5,7 @@ const multer = require("multer");
 var md5 = require("md5");
 const path = require('path');
 const Product = require("./libs/Product");
+const User = require("./libs/User");
 const mysql = require('mysql2');
 
 const app = express();
@@ -345,6 +346,78 @@ app.get("/api/report", checkAuth, async (req, res) => {
     } catch (ex) {
         res.json({
             reesult: false,
+            message: ex.message
+        });
+    }
+});
+
+app.post("api/user/add", checkAuth, async (req,res)=>{
+    const input =req.body;
+    try {
+        var result = await User.createUser(pool,
+            input.user_name, input.user_type_id,input.user_pwd,
+            input.first_name, input.user_lastname,
+            input.email
+            );
+
+        res.json({
+            result: true
+        });
+    } catch (ex) {
+        res.json({
+            result: false,
+            message: ex.message
+        });
+    }
+});
+app.get("/api/user/:userId", async (req, res) => {
+    const userId = req.params.userId;
+
+    try {
+        var result = await User.getByUserId(pool, userId);
+
+        res.json({
+            result: true,
+            data: result
+        });
+    } catch (ex) {
+        res.json({
+            result: false,
+            message: ex.message
+        });
+    }
+});
+
+app.post("/api/user/update", checkAuth, async (req, res) => {
+    const input = req.body;
+
+    try {
+        var result = await User.updateUser(pool, input.user_id,
+            input.user_name,input.user_type_id,input.user_pwd, input.first_name,
+            input.last_name, input.email);
+
+        res.json({
+            result: true
+        });
+    } catch (ex) {
+        res.json({
+            result: false,
+            message: ex.message
+        });
+    }
+});
+app.post("/api/user/delete", checkAuth, async (req, res) => {
+    const input = req.body;
+
+    try {
+        var result = await User.deleteUser(pool, input.user_id);
+
+        res.json({
+            result: true
+        });
+    } catch (ex) {
+        res.json({
+            result: false,
             message: ex.message
         });
     }
