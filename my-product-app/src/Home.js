@@ -33,6 +33,7 @@ export default function Home() {
     const [products, setProducts] = useState([]);
     const [cartItems, setCartItems] = useState([]);
     const [user, setUser] = useState([]);
+    const [users, setUsers] = useState([]);
     const [userTypes, setUserTypes] = useState([]);
     const [userTypeId, setUserTypeId] = useState(0);
 
@@ -92,7 +93,8 @@ export default function Home() {
             const json = await response.json();
             setProducts(json.data);
         }
-
+        fetchData();
+    }, [productTypeId]);
         useEffect(() => {
             async function fetchData() {
                 const response = await fetch(
@@ -114,8 +116,7 @@ export default function Home() {
             fetchData();
         }, [userTypeId]);
 
-        fetchData();
-    }, [productTypeId]);
+
 
     const fetchProducts = async () => {
         let json = await API_GET("products/type/" + productTypeId);
@@ -137,7 +138,7 @@ export default function Home() {
         }
     };
 
-    const onDeleteU = async (data) => {
+     const onDeleteU = async (data) => {
         let json = await API_POST("user/delete", {
             user_id: data.user_id
         });
