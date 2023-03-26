@@ -3,6 +3,7 @@ import { Link, Navigate } from "react-router-dom";
 import { API_GET, API_POST } from "./api";
 import ProductItem from "./ProductItem";
 import "./Home.css";
+import UserItem from "./UserItem";
 import img1 from "./images/istockphoto-1254474165-170667a.jpg";
 
 export const addToCart = async (order_id, user_id, product_id, price) => {
@@ -31,7 +32,9 @@ export default function Home() {
     const [productTypeId, setProductTypeId] = useState(0);
     const [products, setProducts] = useState([]);
     const [cartItems, setCartItems] = useState([]);
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState([]);
+    const [userTypes, setUserTypes] = useState([]);
+    const [userTypeId, setUserTypeId] = useState(0);
 
     useEffect(() => {
         async function fetchData() {
@@ -46,6 +49,27 @@ export default function Home() {
 
             let json = await response.json();
             setProductTypes(json.data);
+        }
+
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        async function fetchData() {
+            const response = await fetch(
+                "http://localhost:8080/api/user_types",
+                {
+                    method: "GET",
+                    headers: {
+                        Accept: "application/json",
+                        'content-Type': 'application/json',
+                        Authorization: "Bearer " + localStorage.getItem("access_token")
+                    }
+                }
+            );
+
+            let json = await response.json();
+            setUserTypes(json.data);
         }
 
         fetchData();
@@ -69,6 +93,27 @@ export default function Home() {
             setProducts(json.data);
         }
 
+        useEffect(() => {
+            async function fetchData() {
+                const response = await fetch(
+                    "http://localhost:8080/api/users/type/" + userTypeId,
+                    {
+                        method: "GET",
+                        headers: {
+                            Accept: "application/json",
+                            'content-Type': 'application/json',
+                            Authorization: "Bearer " + localStorage.getItem("access_token")
+                        }
+                    }
+                );
+    
+                const json = await response.json();
+                setUsers(json.data);
+            }
+    
+            fetchData();
+        }, [userTypeId]);
+
         fetchData();
     }, [productTypeId]);
 
@@ -76,6 +121,11 @@ export default function Home() {
         let json = await API_GET("products/type/" + productTypeId);
         setProducts(json.data);
     };
+
+    const fetchUsers = async () => {
+        let json = await API_GET("users/type/" + userTypeId);
+        setUsers(json.data);
+    }
 
     const onDelete = async (data) => {
         let json = await API_POST("product/delete", {
@@ -86,6 +136,16 @@ export default function Home() {
             fetchProducts();
         }
     };
+
+    const onDeleteU = async (data) => {
+        let json = await API_POST("user/delete", {
+            user_id: data.user_id
+        });
+
+        if (json.result) {
+            fetchUsers();
+        }
+    }
 
     {
         products && products.map((item) => (
