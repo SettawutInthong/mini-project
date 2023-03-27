@@ -52,7 +52,7 @@ export default function Repost() {
 
             for (var i = 0; i < json.data.length; i++) {
                 var item = json.data[i];
-                labels.push(item.user_type);
+                labels.push(item.user_type_name);
                 data.push(item.user_count);
             }
 
@@ -74,17 +74,6 @@ export default function Repost() {
         fetchData();
     }, []);
 
-    const getChart = () => {
-        if (isLoading) {
-            return <Bar options={options}
-                data={chartData}
-                ref={chartRef}
-                onClick={onClick} />;
-        }
-
-        return <></>;
-    }
-
     const onClick = async (event) => {
         var element = getElementAtEvent(chartRef.current, event);
         var index = element[0].index;
@@ -97,8 +86,15 @@ export default function Repost() {
         setUserStore(json.data);
     }
 
-    return (
-        <>
+    const getChart = () => {
+        if (isLoading) {
+            return <Bar options={options}
+                data={chartData}
+                ref={chartRef}
+                onClick={onClick} />;
+        }
+
+        return <>
             <div className="container-fluid mt-3">
                 {
                     getChart()
@@ -114,7 +110,12 @@ export default function Repost() {
                     ))
                 }
             </div>
-        </>
-    );
+        
+        </>;
+    }
+
+    
+
+    
 
 }
