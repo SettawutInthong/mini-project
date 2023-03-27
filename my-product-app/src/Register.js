@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { API_GET, API_POST } from "./api";
 import UserItem from "./UserItem";
+import "./Register.css";
 
 export default function Register() {
 
@@ -87,7 +88,7 @@ export default function Register() {
                         ))
                     }
                 </select>
-
+                        
                 <Link to={"/ureport"} className="btn btn-outline-primary me-3">รายงาน</Link>
                 
                 
