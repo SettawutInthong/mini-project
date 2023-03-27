@@ -227,26 +227,6 @@ app.post("/api/product/add", checkAuth, async (req, res) => {
         });
     }
 });
-app.post("/api/user/add", checkAuth, async (req, res) => {
-    const input = req.body;
-
-    try {
-        var result = await User.createUser(pool,
-            input.user_name	, input.user_pwd,
-            input.first_name, input.last_name,
-            input.age, input.address,
-            input.email, input.phone	);
-
-        res.json({
-            result: true
-        });
-    } catch (ex) {
-        res.json({
-            result: false,
-            message: ex.message
-        });
-    }
-});
 
 app.get("/api/product/:productId", async (req, res) => {
     const productId = req.params.productId;
@@ -356,7 +336,7 @@ app.post("api/user/add", checkAuth, async (req,res)=>{
     try {
         var result = await User.createUser(pool,
             input.user_name, input.user_type_id,input.user_pwd,
-            input.first_name, input.user_lastname,
+            input.first_name, input.last_name,
             input.email
             );
 
