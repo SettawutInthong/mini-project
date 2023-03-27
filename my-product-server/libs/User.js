@@ -33,6 +33,7 @@ module.exports = {
 
         return await pool.query(sql);
     },
+
     /*getSumUser: async (pool) => {
         var sql = "SELECT a.user_type_id,"
                     + "b.user_type_name,"
