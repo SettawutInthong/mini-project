@@ -14,6 +14,7 @@ import Register from './Register';
 import ProductDetail from './ProductDetail';
 import UserDetail from './UserDetail';
 import Report from './Report';
+import Ureport from './Ureport';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -26,6 +27,7 @@ root.render(
       <Route path="/product/:productId" element={<ProductDetail />} />
       <Route path="/user/:userId" element={<UserDetail />} />
       <Route path="report" element={<Report />} />
+      <Route path="ureport" element={<Ureport />} />
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')
