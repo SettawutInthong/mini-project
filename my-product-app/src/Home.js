@@ -221,12 +221,12 @@ export default function Home() {
                         </button>
                     </div>
                 </div>
-                <div align="left">
+                
                 <div className="buttons-container" >
                 <a href="./Register">Profile</a>
                 
                 </div>
-                </div>
+                
                 <img src={img1} alt="Flower" className="flower-image" />
                 <div className="categories">
                     <select
