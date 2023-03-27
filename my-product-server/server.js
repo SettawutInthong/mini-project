@@ -350,6 +350,7 @@ app.post("api/user/add", checkAuth, async (req,res)=>{
         });
     }
 });
+
 app.get("/api/user/:userId", async (req, res) => {
     const userId = req.params.userId;
 
@@ -402,4 +403,62 @@ app.post("/api/user/delete", checkAuth, async (req, res) => {
         });
     }
 });
+
+app.get("/api/user_types", checkAuth, (req, res) => {
+    const query = "SELECT * FROM user_types";
+
+    pool.query(query, (error, results) => {
+        if (error) {
+            res.json({
+                result: false,
+                message: error.message
+            })
+        } else {
+            res.json({
+                result: true,
+                data: results
+            });
+        }
+    });
+});
+
+app.get("/api/users/type/:userTypeId", checkAuth, (req, res) => {
+    const userTypeId = req.params.userTypeId;
+    const sql = "SELECT a.*, b.user_type_name "
+        + "FROM users a "
+        + "JOIN user_types b ON a.user_type_id = b.user_type_id ";
+
+    if (userTypeId == 0) {
+        pool.query(sql, (error, results) => {
+            if (error) {
+                res.json({
+                    result: false,
+                    message: error.message
+                });
+            } else {
+                res.json({
+                    result: true,
+                    data: results
+                });
+            }
+        });
+    } else {
+        pool.query(sql + "WHERE a.user_type_id = ?",
+            [userTypeId], (error, results) => {
+                if (error) {
+                    res.json({
+                        result: false,
+                        message: error.message
+                    });
+                } else {
+                    res.json({
+                        result: true,
+                        data: results
+                    });
+                }
+            });;
+    }
+});
+
+
 
