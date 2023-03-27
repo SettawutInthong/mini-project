@@ -76,6 +76,7 @@ export default function Home() {
         fetchData();
     }, []);
 
+
     useEffect(() => {
         async function fetchData() {
             const response = await fetch(
@@ -95,26 +96,26 @@ export default function Home() {
         }
         fetchData();
     }, [productTypeId]);
-        useEffect(() => {
-            async function fetchData() {
-                const response = await fetch(
-                    "http://localhost:8080/api/users/type/" + userTypeId,
-                    {
-                        method: "GET",
-                        headers: {
-                            Accept: "application/json",
-                            'content-Type': 'application/json',
-                            Authorization: "Bearer " + localStorage.getItem("access_token")
-                        }
+      useEffect(() => {
+        async function fetchData() {
+            const response = await fetch(
+                "http://localhost:8080/api/users/type/" + userTypeId,
+                {
+                    method: "GET",
+                    headers: {
+                        Accept: "application/json",
+                        'content-Type': 'application/json',
+                        Authorization: "Bearer " + localStorage.getItem("access_token")
                     }
-                );
-    
-                const json = await response.json();
-                setUsers(json.data);
-            }
-    
-            fetchData();
-        }, [userTypeId]);
+                }
+            );
+
+            const json = await response.json();
+            setUsers(json.data);
+        }
+
+        fetchData();
+    }, [userTypeId]);
 
 
 
@@ -201,9 +202,11 @@ export default function Home() {
         return (
             <div className="background">
                 <div className="nav container">
+                
                     <a href="#" className="logo">
                         Green plantnet
                     </a>
+                    
                     <i className="bx bx-shopping-bag" id="cart-icon"></i>
                     <div className="cart">
                         <h2 className="cart-title">Your Cart</h2>
@@ -217,6 +220,9 @@ export default function Home() {
                             Buy
                         </button>
                     </div>
+                </div>
+                <div className="buttons-container">
+                <a href="./Register">Profile</a>
                 </div>
                 <img src={img1} alt="Flower" className="flower-image" />
                 <div className="categories">
