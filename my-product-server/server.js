@@ -460,5 +460,19 @@ app.get("/api/users/type/:userTypeId", checkAuth, (req, res) => {
     }
 });
 
+app.get("/api/ureport", checkAuth, async (req, res) => {
+    try {
+        var result = await Product.getSumUser(pool);
 
+        res.json({
+            result: true,
+            data: result
+        });
+    } catch (ex) {
+        res.json({
+            reesult: false,
+            message: ex.message
+        });
+    }
+});
 
