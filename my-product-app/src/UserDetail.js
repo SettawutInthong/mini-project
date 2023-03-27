@@ -27,7 +27,7 @@ export default function UserDetail() {
                     headers: {
                         Accept: "application/json",
                         'Content-Type': 'application/json',
-                        
+                        Authorization: "Bearer " + localStorage.getItem("access_token")
                     }
                 }
             );
@@ -124,11 +124,11 @@ export default function UserDetail() {
                     Authorization: "Bearer " + localStorage.getItem("access_token")
                 },
                 body: JSON.stringify({
-                    user_name: username,                    
+                    user_name: username,
+                    user_type_id: userTypeId,
                     user_pwd: password,
                     first_name: firstName,
                     last_name: lastName,
-                    user_type_id: userTypeId,
                     email: email
                 })
             }
@@ -175,8 +175,7 @@ export default function UserDetail() {
 
     return (
         
-        
-            
+            <>
             <div className="container m-auto">
                 <Form noValidate validated={validated} onSubmit={onSaveU}>
                     <Row className="mb-3">
@@ -247,7 +246,7 @@ export default function UserDetail() {
                             <Form.Select
                                 value={userTypeId}
                                 onChange={(e) => setUserTypeId(e.target.value)}
-                                >
+                                required>
                                 <option label="กรุณาเลือกเพศ"></option>
                                 {
                                     userTypes.map(item => (
@@ -283,6 +282,6 @@ export default function UserDetail() {
                     </Row>
                 </Form>
             </div>
-       
+            </>
     );
 }
