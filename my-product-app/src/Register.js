@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { API_GET, API_POST } from "./api";
 import UserItem from "./UserItem";
+
 export default function Register() {
 
+    const [users, setUsers] = useState([]);
     const [userTypes, setUserTypes] = useState([]);
     const [userTypeId, setUserTypeId] = useState(0);
-    const [users, setUsers] = useState([]);
 
+    
 
     useEffect(() => {
         async function fetchData() {
@@ -30,6 +32,9 @@ export default function Register() {
         fetchData();
     }, []);
 
+    
+
+
     useEffect(() => {
         async function fetchData() {
             const response = await fetch(
@@ -51,14 +56,15 @@ export default function Register() {
         fetchData();
     }, [userTypeId]);
 
+    
     const fetchUsers = async () => {
         let json = await API_GET("users/type/" + userTypeId);
         setUsers(json.data);
     }
 
-    const onDelete = async (data) => {
+    const onDeleteU = async (data) => {
         let json = await API_POST("user/delete", {
-            user_id: data.user_id,
+            user_id: data.user_id
         });
 
         if (json.result) {
@@ -66,9 +72,11 @@ export default function Register() {
         }
     }
 
+
     if (localStorage.getItem("access_token")) {
         return (
             <div className="container">
+                
                 <select value={userTypeId} onChange={(e) => setUserTypeId(e.target.value)}>
                     <option value={0}>เพศ</option>
                     {
@@ -80,16 +88,16 @@ export default function Register() {
                     }
                 </select>
 
-
-
+                <Link to={"/ureport"} className="btn btn-outline-primary me-3">รายงาน</Link>
+                
                 
                 <div className="container mt-3">
                     {
                         users.map(item => (
-                            <UserItem
-                                key={item.user_id}
-                                data={item}
-                                onDelete={onDelete} />
+                            <UserItem 
+                            key={item.user_id}
+                            data={item} 
+                            onDelete={onDeleteU}/>
                         ))
                     }
                 </div>
