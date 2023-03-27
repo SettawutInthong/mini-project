@@ -34,14 +34,14 @@ module.exports = {
         return await pool.query(sql);
     },
 
-    /*getSumUser: async (pool) => {
+    getSumUser: async (pool) => {
         var sql = "SELECT a.user_type_id,"
                     + "b.user_type_name,"
-                    + "SUM(a.stock) as user_count "
-                    + "FROM products a "
-                    + "JOIN product_types b ON a.product_type_id = b.product_type_id "
-                    + "GROUP BY a.product_type_id, b.product_type_name";
+                    + "SUM(a.role_id) as user_count "
+                    + "FROM users a "
+                    + "JOIN user_types b ON a.user_type_id = b.user_type_id "
+                    + "GROUP BY a.user_type_id, b.user_type_name";
         
         return await pool.query(sql);
-    }*/
+    }
 }
