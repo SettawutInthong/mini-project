@@ -10,6 +10,7 @@ import {
   Route,
 } from "react-router-dom";
 import Home from './Home';
+import Register from './Register';
 import ProductDetail from './ProductDetail';
 import UserDetail from './UserDetail';
 import Report from './Report';
@@ -20,6 +21,7 @@ root.render(
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="home" element={<Home />} />
+      <Route path="register" element={<Register />} />
       <Route path="login" element={<Login />} />
       <Route path="/product/:productId" element={<ProductDetail />} />
       <Route path="/user/:userId" element={<UserDetail />} />
